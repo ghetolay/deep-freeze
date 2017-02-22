@@ -1,4 +1,7 @@
 module.exports = function deepFreeze (o) {
+  if ( ArrayBuffer.isView(o) && !(o instanceof DataView) )
+    return o;
+
   Object.freeze(o);
 
   var oIsFunction = typeof o === "function";
@@ -13,6 +16,6 @@ module.exports = function deepFreeze (o) {
       deepFreeze(o[prop]);
     }
   });
-  
+
   return o;
 };
